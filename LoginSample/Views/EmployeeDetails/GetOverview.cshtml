@@ -1,0 +1,84 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "GetOverview";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body style="background-color: gainsboro">
+    <h2 class="d-flex justify-content-center" style="margin:4vh 0 4vh 0">Employee Overview</h2>
+    <div class="col-12">
+        <a class="btn btn-link d-flex justify-content-start" style="margin:4vh 0 4vh 0" href="@Url.Action("AdminPage", "Home")">Go Back</a>
+    </div>
+    <table class="table table-bordered table striped" style="border-color:darkslateblue">
+        <tr>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Date of Birth</th>
+            <th>Sex</th>
+            <th>Joining Date</th>
+            <th>Worked in Japan</th>
+            <th>Qualifications</th>
+            <th>Feedback</th>
+            <th>Suggestions</th>
+            <th>Photo</th>
+            @*<th>Edit Option</th>
+                <th>Delete Option</th>*@
+        </tr>
+
+        @for (int i = 0; i < Model.Rows.Count; i++)
+        {
+            <tr>
+                <td>@Model.Rows[i][1]</td>
+                <td>@Model.Rows[i][2]</td>
+                <td>
+                    @{
+                        string showBirthDate = ((DateTime)(Model.Rows[i][3])).ToString("dd-MM-yyyy");
+                    }
+                    @showBirthDate
+                </td>
+                <td>@Model.Rows[i][4]</td>
+                <td>
+                    @{
+                        string showJoinigDate = ((DateTime)(Model.Rows[i][5])).ToString("dd-MM-yyyy");
+                    }
+                    @showJoinigDate
+                </td>
+                <td>@Model.Rows[i][6]</td>
+                <td>@Model.Rows[i][7]</td>
+                <td>@Model.Rows[i][8]</td>
+                <td>@Model.Rows[i][9]</td>
+                <td>
+                    @{
+                        string imageSource = "~/Images/New_Male_PlaceHolder.png";
+                        if (Model.Rows[i][10] != null)
+                        {
+                            imageSource = "data:image/jpeg;base64," + Convert.ToBase64String((byte[])Model.Rows[i][10]);
+                        }
+                    }
+
+                    <img src=@Url.Content(imageSource) alt="" height=120 width=140 />
+                </td>
+                @*<td> <a href="@Url.Action("Edit", "Details", new { @id = @Model.Rows[i][0]})">Edit</a> </td>
+                    <td> <a href="@Url.Action("Delete", "Details", new { @id = @Model.Rows[i][0]})">Delete</a> </td>*@
+            </tr>
+        }
+    </table>
+</body>
+</html>
+
+    @*@{
+            byte[] cover = GetImageFromDataBase(id);
+            if (cover != null)
+            {
+                return File(cover, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
+        }*@

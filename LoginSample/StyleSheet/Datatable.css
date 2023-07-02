@@ -1,0 +1,28 @@
+﻿#display-table_paginate {
+    color: gold;
+}
+
+select {
+    padding:1vw;
+    color: gold;
+}
+input {
+    color: gold;
+}
+table {
+    border: 5px solid;
+    border-bottom: 5px solid !important;   
+}
+
+.dataTables_wrapper {
+    padding-bottom: 1vw;
+}
+.dataTables_filter{
+    padding-bottom:1vw;
+}
+.dataTables_info{
+    margin-top:1vh !important;
+}
+.dataTables_paginate {
+    margin-top: 1vh !important;
+}

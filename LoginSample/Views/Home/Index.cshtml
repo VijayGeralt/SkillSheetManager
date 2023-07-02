@@ -1,0 +1,72 @@
+﻿
+@model LoginSample.Models.LoginInfo
+
+@{
+    ViewBag.Title = "Home Page";
+    ViewBag.data = "UserType";
+    ViewBag.UserName = "UserName";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='-1'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>Skill Sheet manager</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/Site/site.js"></script>
+    <script src="~/Scripts/Site/Login.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" href="~/StyleSheet/TextAnimation.css">
+    <link rel="stylesheet" href="~/StyleSheet/Resposive.css">
+    <script src="~/Scripts/Site/Backprevent.js"></script> 
+</head>
+<body>
+
+    <div id="LoginDlg" class="container text-center" style="margin-top:25vh">
+        <div class="row">
+            <div class="col-xl-6 col-md-6 col-sm-12 col-12" style="margin-top:15vh">
+                <div class="IntroText">
+                    <h1 class="text-light">WelCome TO !!!</h1>
+                    <h2 class="text-light text_1 ">Skill Sheet Manager</h2>
+                    <h2 class="text-white text_2 ">スキルシートマネージャー</h2>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-6 col-sm-12 col-12 needs-validation" novalidate>
+                <div class="card __div">
+                    <div class="card-body">
+                        <h3 class="card-title text-white fs-3 fw-bold">Log-in</h3>
+                        <div class="d-flex justify-content-start mt-3">
+                            <label for="groupName" class="form-label text-white col-6 fw-bold fs-5 ">Group name: </label>
+                            @Html.DropDownListFor(model => model.SelectedGroup, Model.UserType, new { @class = "col-6 dropdown", @id = "SelectedGroup" })
+                        </div>
+                        <label class="text-danger col-6 text-right" id="dropDErr" style="margin-left:20vw">*required</label>
+                        <div class="d-flex justify-content-start mt-3">
+                            <label for="groupName" class="form-label text-white col-6 fw-bold fs-5 was-validated">User Name: </label>
+                            @Html.DropDownListFor(model => model.SelectedUser, Model.UserName, "---select---", new { @class = "col-6 dropdown", @id = "SelectedUser" })
+                        </div>
+                        <div class="d-flex justify-content-start mt-3">
+                            <label for="exampleInputPassword1" class="form-label text-white col-6 fw-bold fs-5">Password:</label>
+                            @Html.PasswordFor(model => model.UserPassword, new { @class = "col-6 needs-validation", @id = "UserPassword", @type = "password", required = "required" })
+
+                        </div>
+                        <label class="text-danger col-6 text-right" id="view" style="margin-left:20vw">*required</label>
+                        <div class="d-flex justify-content-center mt-3 gap-5">
+                            <a href="#" type="submit" class="btn btn-primary btn-lg" id="btnLogin" onclick="javascript:ValidateUser();">Log In</a>
+                            <a href="#" class="btn btn-outline-danger btn-lg" onClick="document.location.reload(true)">Reset</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

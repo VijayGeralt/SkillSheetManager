@@ -1,0 +1,25 @@
+﻿@media screen and (max-width: 770px) {
+    .IntroText {
+        margin-left: 36vw;
+    }
+    .text_1 {
+        margin-left: 36vw;
+        font-size: 30px;
+    }
+    .text_2 {
+        margin-left: 36vw;
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 1800px) {
+    .IntroText {
+        margin-left: 15vw;
+    }
+    .text_2 {
+        font-size: 30px;
+    }
+    .text_1 {
+        font-size: 30px;
+    }
+}

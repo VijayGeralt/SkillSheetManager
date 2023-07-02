@@ -1,0 +1,338 @@
+﻿@model SkillSheetManager.Models.EmployeeDetailsModel
+
+@{
+    ViewBag.Title = "EmployeeDetails";
+    string showName = "User";
+    string showDesignation = "Designation";
+    string joiningDateValue = String.Empty;
+    string birthDateValue = String.Empty;
+    string showSex = string.Empty;
+    string showWorkInJapan = string.Empty;
+    string showQualifications = string.Empty;
+    string showLanguages = string.Empty;
+    string showDatabases = string.Empty;
+    string showPhoto = string.Empty;
+    string imageSource = "~/Images/New_Male_PlaceHolder.png";
+
+    //Model.UserId = ViewBag.Id;
+    bool isOldUser = ViewBag.IsOldUser;
+
+    //Old user login
+    if (Model.Name != null)
+    {
+        showName = Model.Name.ToString();
+        showDesignation = Model.Designation.ToString();
+        joiningDateValue = (Model.JoiningDate.ToString("yyyy-MM-dd")) == "0001-01-01" ? "" : Model.JoiningDate.ToString("yyyy-MM-dd");
+        birthDateValue = (Model.DateOfBirth.ToString("yyyy-MM-dd")) == "0001-01-01" ? "" : Model.DateOfBirth.ToString("yyyy-MM-dd");
+        showSex = Model.Sex.ToString().Trim() == "Male" ? "Male" : "Female";
+        imageSource = showSex == "Female" ? "~/Images/New_Female_PlaceHolder.png" : "~/Images/New_Male_PlaceHolder.png";
+        showWorkInJapan = Model.WorkedInJapan.ToString().Trim() == "Yes" ? "Yes" : "No";
+
+        //showQualifications = Model.Qualification.ToString();
+        showQualifications = (Model.Qualification != null) ? Model.Qualification.ToString() : "";
+        //showLanguages = Model.Languages.ToString();
+        showLanguages = (Model.Languages != null) ? Model.Languages.ToString() : "";
+        //showDatabases = Model.Database.ToString();
+        showDatabases = (Model.Database != null) ? Model.Database.ToString() : "";
+        if (Model.Photo != null)
+        {
+            showPhoto = Convert.ToBase64String(Model.Photo);
+            imageSource = "data:image/jpeg;base64," + showPhoto;
+        }
+    }
+}
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DetailsPage.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+<script src="~/Scripts/Javascripts/UserPageJavascript.js"></script>
+<script src="~/Scripts/Site/Backprevent.js"></script>
+<body>
+    <div class="main-content">
+        <!-- Top navbar -->
+        <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+            <div class="container-fluid">
+
+                <div class="dropdown">
+                    <button id="myBtn" onclick="myFunction()" class="btn btn-info dropdown-toggle">Options</button>
+                    <div id="myDropdown" onclick="myFunction1()" class="dropdown-content">
+                        <a id="change" onclick="onChangepass()">Change Password</a>
+                        <a id="Log-out" onclick="onLogClick()"> Logout</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+        <!-- Header -->
+        <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('/Images/BackGround.jpg'); background-size: cover; background-position: center top; ">
+            <!-- Mask -->
+            <span class="mask bg-gradient-default opacity"></span>
+            <!-- Header container -->
+            <div class="container-fluid d-flex align-items-center">
+                <div class="row">
+                    <div class="col-lg-7 col-md-10">
+                        <h1 class="display-2 text-white">Hello<br>@showName</h1>
+                        <p class="text-white mt-0 mb-5">This is your profile page where you can enter / edit your details. Here, you can enter your skills and feedback for your managers.</p>
+                        <a href="#ProfDiv" class="btn btn-info" for="#ProfDiv">Edit profile</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- Page content -->
+
+        <div class="container-fluid mt--7">
+            <div class="row">
+                <div class="col-xl-3" style="display:block"></div>
+                <div class="col-xl-6 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-header  border-0 row ">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                    <div class="col-12">
+                                        <h3 class="mb-0" style="margin-bottom:50px !important; text-align:center; font-size:2.5rem; color:darkslategrey">Details:-</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3" style="display:block"></div>
+                            <div class="col-xl-6">
+                                <div class="card card-profile shadow">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-3 order-lg-2">
+                                            <div class="card-profile-image">
+                                                <div id="imagePreview">
+                                                    <img src="@Url.Content(imageSource)" class="rounded-circle" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+
+                                    </div>
+                                    <div class="card-body pt-0 pt-md-4">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card-profile-stats d-flex justify-content-center mt-md-2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="d-flex justify-content-center" style="padding-top:40px; padding-bottom:20px">
+                                                <label for="inputPhoto" type="button" id="btnForInpuPhoto" class="btn btn-sm btn-info bi bi-upload" style=" margin : 3vh 0 0 0; margin-inline-end: 10vw !important; margin-inline-start: 10vw !important">Edit Photo</label>
+
+                                                <input type="file" id="inputPhoto" name="inputPhoto" style="visibility:hidden; display:none" accept="image/png, image/jpg, image/jpeg" onchange="fileCheck(this);" />
+
+                                                @*<a href="#!" class="btn btn-sm btn-info">Edit Photo</a>*@
+                                                @*<a href="#!" class="btn btn-sm btn-default float-right">Message</a>*@
+                                            </div>
+                                            <h3 style="font-size:25px !important">
+                                                @showName
+                                                <br>
+                                                <span class="font-weight-light" id="Meriumar"> Age : N/A</span>
+                                            </h3>
+                                            @*<div class="h5 font-weight-300">
+                                                    <i class="ni location_pin mr-2"></i>Rajasthan, India
+                                                </div>*@
+                                            <div class="h5 mt-4">
+                                                <i class="ni business_briefcase-24 mr-2 text-bg-danger" style="font-size:20px !important">@showDesignation</i>
+                                            </div>
+                                            @*<div>
+                                                    <i class="ni education_hat mr-2"></i>Engineering College Bikaner
+                                                </div>*@
+                                            <hr class="my-4">
+                                            <p>Employee at Acty System India Pvt. Ltd.</p>
+                                            @*<a href="#!">Show more</a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body-detailpage col-xl-12">
+                                <form class="col-xl-12">
+                                    @*<div class="row align-items-center" style="padding-bottom : 2px !important">
+                                            <div class="col-8">
+                                                <h3 class="mb-0" style="left: 2px !important">My account</h3>
+                                            </div>
+                                        </div>*@
+
+                                    <h6 class="heading-small text-muted mb-4" id="ProfDiv">User information</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" for="inputName">Name*</label>
+                                                    @*<input type="text" id="inputName" class="form-control form-control-alternative" placeholder="Name" value="">*@
+                                                    @Html.TextBoxFor(model => model.Name, new { @id = "Name", @class = "form-control form-control-alternative", @*@disabled = (showName!=string.Empty) ? "disabled" : null,*@placeholder = "Name",
+                                                    oninput = "validateLength(this, 20)"
+                                                })
+                                                    <label class="text-danger col-12 text-start" id="requiredName" style="margin-right:20vw; display:none"></label>
+
+                                                </div>
+                                            </div>
+                                            @*<div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-email">Email address</label>
+                                                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="abc@example.com">
+                                                    </div>
+                                                </div>*@
+                                            <div class="col-lg-5">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label">Date of birth*</label>
+                                                    @*<input type="date" id="dateOfBirth" class="form-control form-control-alternative" name="dateOfBirth">*@
+
+
+                                                    @Html.TextBoxFor(model => model.DateOfBirth, null, new
+                                                    {
+                                                        @id = "DateOfBirth",
+                                                        @Value = birthDateValue,
+                                                        @type = "date",
+                                                        @class = "form-control form-control-alternative",
+                                                        @onfocus = "this.style.color = '#909'",
+                                                        @onblur = "GreyOutEmptyDates(this), UpdateAgeDynamically()",
+                                                        @name = "dateOfBirth"@*, @onchange = "UpdateAgeDynamically();"*@
+                                                    })
+                                                    <label class="text-danger col-12 text-start" id="requiredDOB" style="margin-right:20vw; display:none"></label>
+                                                    @*<label class="form-control-label" for="input-last-name">Last name</label>
+                                                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value=@Model.Name>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label">Designation*</label>
+                                                    @*<input type="text" id="inputDesignation" class="form-control form-control-alternative" placeholder="Designaltion (eg Solution Developer)" value="">*@
+                                                    @Html.TextBoxFor(model => model.Designation, null, new
+                                                    {   @id = "Designation",
+                                                        @class = "form-control form-control-alternative color: rgb(135,206,235)",
+                                                        placeholder = "Designaltion (eg Solution Developer)",
+                                                        oninput = "validateLength(this, 20)"
+                                                    })
+                                                    <label class="text-danger col-12 text-start" id="requiredDesignation" style="margin-right:20vw; display:none"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label">Joining Date*</label>
+                                                    @*<input type="date" id="joiningDate" class="form-control form-control-alternative" name="joiningDate">*@
+
+                                                    @Html.TextBoxFor(model => model.JoiningDate, null, new
+                                                    {
+                                                        @id = "JoiningDate",
+                                                        @type = "date",
+                                                        @Value = joiningDateValue,
+                                                        @class = "form-control form-control-alternative",
+                                                        @onfocus = "this.style.color = '#909'",
+                                                        @onblur = "GreyOutEmptyDates(this)"@*,@name = "JoiningDate"*@
+                                                    })
+                                                    <label class="text-danger col-12 text-start" id="errorJoiningDate" style="margin-right:10vw; display:none"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" @*for="sex"*@>Sex*</label>
+                                                    <div id="sex">
+                                                        <label class="radio-inline" style="margin-inline-end:50px !important">
+                                                            <input type="radio" @(showSex == "Male" ? "checked" : "") name="radioOptionsSex" value="Male"> Male
+                                                            @*@Html.RadioButtonFor(model => model.Sex, new {@value = "Male", @name = "radioOptionsSex", @checked = (showSex == "Male") ? true : false }) Male*@
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" @(showSex == "Female" ? "checked" : "") name="radioOptionsSex" value="Female"> Female
+                                                            @*@Html.RadioButtonFor(model => model.Sex, new { @value = "Female", @name = "radioOptionsSex", @checked = (showSex == "Female") ? true : false }) Female*@
+                                                        </label>
+                                                    </div>
+                                                    <label class="text-danger col-6 text-start" id="requiredSex" style="margin-right:20vw; display:none"></label>
+                                                    @*<select class="form-control form-control-alternative" name="sex" id="sex">
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                            <option value="other">Other</option>
+                                                        </select>*@
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-5">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" @*for="workedInJapan"*@>Worked in Japan?*</label>
+
+                                                    <div id="workedInJapan">
+                                                        <label class="radio-inline" style="margin-inline-end:50px !important">
+                                                            <input type="radio" @(showWorkInJapan == "Yes" ? "checked" : "") name="radioOptionsJapan" value="Yes"> Yes
+                                                            @*@Html.RadioButtonFor(model => model.WorkedInJapan, "Yes", new { @name = "radioOptionsJapan", @checked = (showWorkInJapan == "Yes") ? true : false }) Yes*@
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" @(showWorkInJapan == "No" ? "checked" : "") name="radioOptionsJapan" value="No"> No
+                                                            @*@Html.RadioButtonFor(model => model.WorkedInJapan, "No", new { @name = "radioOptionsJapan", @checked = (showWorkInJapan == "No") ? true : false }) No*@
+                                                        </label>
+                                                    </div>
+                                                    <label class="text-danger col-5 text-start" id="errorWorkedInJapan" style="margin-right:20vw; display:none"></label>
+                                                    @*<select class="form-control form-control-alternative" name="workedInJapan" id="workedInJapan">
+                                                            <option value="japanYes">Yes</option>
+                                                            <option value="japanNo">No</option>
+                                                        </select>*@
+                                                    @*<input type="text" id="workrdInJapan" class="form-control form-control-alternative" placeholder="Worked in Japan..." value="">*@
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Description -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <h6 class="heading-small text-muted mb-4">Qualifications & Skills</h6>
+                                    <div class="pl-4">
+                                        <div class="form-group focused">
+                                            <label>Qualifications</label>
+                                            @Html.TextAreaFor(model => model.Qualification, new { @id = "Qualification", @style = "resize: none", @Value = showQualifications, @class = "form-control form-control-alternative color: rgb(135,206,235)", rows = "2", placeholder = "Enter your qualifications here...", oninput = "validateLength(this, 100)" })
+                                            <!--<textarea rows="4" class="form-control form-control-alternative" placeholder="Enter your qualifications here...">-->@*Entered qualifications.*@<!--</textarea>-->
+                                        </div>
+                                        <div class="form-group focused">
+                                            <label>Skills</label>
+                                            @Html.TextAreaFor(model => model.Languages, new { @id = "Languages", @Value = showLanguages, @style = "resize: none", @class = "form-control form-control-alternative color: rgb(135,206,235)", rows = "2", placeholder = "Enter the programming languages that you have worked on...", oninput = "validateLength(this, 100)" })
+                                            <!--<textarea rows="2" class="form-control form-control-alternative" placeholder="Enter your skills here...">-->@*Entered qualifications.*@<!--</textarea>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="heading-small text-muted mb-4">Experience & feedback</h6>
+                                    <div class="pl-4">
+                                        <div class="form-group focused">
+                                            <label>Experience & feedback</label>
+                                            @Html.TextAreaFor(model => model.Database, new { @id = "Database", @Value = showDatabases, @style = "resize: none", @class = "form-control form-control-alternative color: rgb(135,206,235)", rows = "4", placeholder = "Enter the databases that you have worked on...", oninput = "validateLength(this, 200)" })
+                                            <!--<textarea rows="2" class="form-control form-control-alternative" placeholder="Enter the databases that you have worked on...">-->@*Entered qualifications.*@<!--</textarea>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center mt-3 gap-5">
+                                    @*<a href="#!" class="btn btn-sm btn-primary" id="submitButton" onclick="AddUserDetails(@Model.UserId, @(isOldUser.ToString().ToLower()), '@HttpUtility.JavaScriptStringEncode(showPhoto)')">Submit</a>*@
+                                    <a href="#!" class="btn btn-sm btn-primary" id="submitButton" data-user-id="@Model.UserId" data-isolduser="@(isOldUser.ToString().ToLower())" data-user-photo='@HttpUtility.JavaScriptStringEncode(showPhoto)' onclick="AddUserDetails(this)">Submit</a>
+                                    <a href="#!" class="btn btn-sm btn-primary" onclick="refreshPage()">Reset</a>
+                                    <script>
+                                        function refreshPage() {
+                                            window.location.reload();
+                                        }
+                                    </script>
+                                </div>
+                                <footer class="footer">
+                                    <div class="row align-items-center justify-content-xl-between">
+                                        <div class="col-xl-6 m-auto text-center">
+                                            <div class="copyright">
+                                                <p>Made with <img src="~/Images/HeartImage.png" alt="Image" class="align-content-sm-between heartImg"> by <mark><em>VIJAY</em></mark> & <mark><em>KUNAL</em></mark> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

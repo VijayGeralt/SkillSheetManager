@@ -1,0 +1,227 @@
+﻿body {
+    background-image: url('/Images/pexels-mo-eid-8347501 (2).jpg');
+    background-repeat: no-repeat;
+    /*overflow-x: hidden;     /* Hide horizontal scrollbar */
+    /*overflow-y: hidden;*/
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+.IntroText {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.line {
+    width: 5em;
+    margin: 0 auto;
+    border-right: 2px solid white;
+    font-size: 3vw;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);
+    color: white;
+}
+
+.text {
+    animation: typewriter 1.5s steps(19) infinite, blinkText 900ms steps(19) infinite;
+}
+
+@keyframes typewriter {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 10em;
+    }
+}
+
+@keyframes blinkText {
+    from {
+        border-right-color: rgba(255,255,255,.75);
+    }
+
+    to {
+        border-right-color: transparent;
+    }
+}
+
+
+.__div {
+    backdrop-filter: blur(20%);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#view {
+    display: none;
+}
+
+#dropDErr {
+    display: none;
+}
+
+#dropDErr1 {
+    display: none;
+}
+
+#dropDErr2 {
+    display: none;
+}
+
+#EditErr {
+    display: none;
+}
+
+#EditErr1 {
+    display: none;
+}
+
+#EditErr2 {
+    display: none;
+}
+
+._tableview {
+    backdrop-filter: blur(20%) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+tbody {
+    border-radius: 1vw !important;
+}
+#ADDuser {
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+#userEdit {
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-.5deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(.5deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(.5deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-.5deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-.5deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(.5deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+.text_1 {
+    font-size: 60px;
+    animation: text1;
+}
+
+.text_2 {
+    font-size: 40px;
+    animation: text2;
+}
+
+.text_1, .text_2 {
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    animation-duration: 10s;
+    animation-timing-function: steps(5, end);
+    animation-iteration-count: infinite;
+}
+
+    .text_1::after, .text_2::after {
+        content: "|";
+        position: absolute;
+        right: 0;
+        animation: caret infinite;
+        animation-duration: 1s;
+        animation-timing-function: steps(1, end);
+    }
+
+@keyframes text2 {
+    0%, 50%, 100% {
+        width: 0;
+    }
+
+    60%, 90% {
+        width: 14.2em;
+    }
+}
+
+@keyframes text1 {
+    0%, 50%, 100% {
+        width: 0;
+    }
+
+    10%, 40% {
+        width: 10em;
+    }
+}
+
+@keyframes caret {
+    0%, 100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
