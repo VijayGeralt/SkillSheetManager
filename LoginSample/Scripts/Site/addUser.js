@@ -77,7 +77,7 @@ function AddNewUser() {
     if (!emailset.test(userEmail)) {
         viewPopup.style.animation = "shake 0.5s";
         uEmail.style.display = "block";
-        uEmail.textContent = "*Email should be like: Acty@gmail.com";
+        uEmail.textContent = "*Email should be like: hello@gmail.com";
         return;
     }
     else {

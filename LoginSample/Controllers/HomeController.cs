@@ -41,7 +41,7 @@ namespace LoginSample.Controllers
 
                     // User types
                     modelObj.UserType = new List<SelectListItem>();
-                    modelObj.UserType.Add(new SelectListItem { Text = "--select--", Value = "0", Disabled = true, Selected = true });
+                    modelObj.UserType.Add(new SelectListItem { Text = "---select---", Value = "0", Disabled = true, Selected = true });
                     modelObj.UserType.Add(new SelectListItem { Text = "Admin", Value = "Admin" });
                     modelObj.UserType.Add(new SelectListItem { Text = "User", Value = "User" });
                     ViewBag.UserType = new SelectList(modelObj.UserType);
