@@ -19,9 +19,14 @@ namespace LoginSample.Controllers
         public ActionResult EmployeeDetails()
         {
             HttpCookie userc = Request.Cookies["idCookie"];
-            if(userc==null)
+            HttpCookie userT = Request.Cookies["uType"];
+            if (userc == null || userT == null)
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (userT.Value.ToLower() == "admin")
+            {
+                return RedirectToAction("PageError", "Home");
             }
             int id = int.Parse(userc.Value);
             EmployeeDetailsModel employeeDetailsModel = new EmployeeDetailsModel();
@@ -43,7 +48,16 @@ namespace LoginSample.Controllers
         {
             try
             {
-                // Use cookie to get id and agian check using dbaccess only pass base64 string image and model from javascript
+                HttpCookie userc = Request.Cookies["user"];
+                HttpCookie userT = Request.Cookies["uType"];
+                if (userc == null || userT == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                if (userT.Value.ToLower() == "admin")
+                {
+                    return RedirectToAction("PageError", "Home");
+                }
 
                 bool isOldUserGot = bool.Parse(isOldUser);
                 // Converting photo from base 64 string to byte array.
@@ -70,10 +84,21 @@ namespace LoginSample.Controllers
             }
         }
 
-        public ActionResult GetOverview()
+        public ActionResult GetOverview(string sortOrder)
         {
             try
             {
+                HttpCookie userc = Request.Cookies["user"];
+                HttpCookie userT = Request.Cookies["uType"];
+                if (userc == null || userT == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                if (userT.Value.ToLower() == "user")
+                {
+                    return RedirectToAction("PageError", "Home");
+                }
+
                 DataTable userDetailTbl = new DataTable();
                 string connectionString = ConfigurationManager.ConnectionStrings["userTableConStr"].ConnectionString;
                 using (SqlConnection sqlCon = new SqlConnection(connectionString))
@@ -82,7 +107,22 @@ namespace LoginSample.Controllers
                     SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM UserDetailsTable", sqlCon);
                     sqlDa.Fill(userDetailTbl);
                 }
-                return View(userDetailTbl);
+
+                // Sorting parameters
+                ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+                // Sorting logic
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        userDetailTbl.DefaultView.Sort = "Name DESC";
+                        break;
+                    default:
+                        userDetailTbl.DefaultView.Sort = "Name"; // Default sorting by Name ascending
+                        break;
+                }
+
+                return View(userDetailTbl.DefaultView.ToTable()); // Pass the sorted DataView to the view
             }
             catch
             {

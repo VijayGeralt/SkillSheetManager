@@ -13,37 +13,10 @@ namespace LoginSample.Db_Access
 {
     public class UserDbAccess
     {
-        public static void AddUserInfo()
-        {
-            try
-            {
-                EmployeeDetailsModel employeeDetailsModel = new EmployeeDetailsModel();
-                string connectionString = ConfigurationManager.ConnectionStrings["userTableConStr"].ConnectionString;
-                using (SqlConnection sqlCon = new SqlConnection(connectionString))
-                {
-                    sqlCon.Open();
-                    string query = "INSERT INTO UserDetailsTable (Name,Designation,DateOfBirth,Sex,JoiningDate,WorkedInJapan,Qualifications,Languages,DatabaseKnown,UserPhoto) VALUES(@Name,@Designation,@DateOfBirth,@Sex,@JoiningDate,@WorkedInJapan,@Qualifications,@Languages,@DatabaseKnown,@UserPhoto)";
-                    //string query = "INSERT INTO UserDetailsTable (Name,Designation) VALUES(@Name,@Designation)";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@Name", employeeDetailsModel.Name);
-                    sqlCmd.Parameters.AddWithValue("@Designation", employeeDetailsModel.Designation);
-                    sqlCmd.Parameters.AddWithValue("@DateOfBirth", employeeDetailsModel.DateOfBirth);
-                    sqlCmd.Parameters.AddWithValue("@Sex", employeeDetailsModel.Sex);
-                    sqlCmd.Parameters.AddWithValue("@JoiningDate", employeeDetailsModel.JoiningDate);
-                    sqlCmd.Parameters.AddWithValue("@WorkedInJapan", employeeDetailsModel.WorkedInJapan);
-                    sqlCmd.Parameters.AddWithValue("@Qualifications", employeeDetailsModel.Qualification);
-                    sqlCmd.Parameters.AddWithValue("@Languages", employeeDetailsModel.Languages);
-                    sqlCmd.Parameters.AddWithValue("@DatabaseKnown", employeeDetailsModel.Database);
-                    sqlCmd.Parameters.AddWithValue("@UserPhoto", employeeDetailsModel.Photo);
-                    sqlCmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw(ex);
-            }
-        }
-
+        /// <summary>
+        /// Adds user details to database.
+        /// </summary>
+        /// <param name="employeeDetailsModel">Employee details.</param>
         internal static void AddInfo(EmployeeDetailsModel employeeDetailsModel)
         {
             try
@@ -91,6 +64,10 @@ namespace LoginSample.Db_Access
             }
         }
 
+        /// <summary>
+        /// Edits user information.
+        /// </summary>
+        /// <param name="employeeDetailsModel">Employee details.</param>
         internal static void EditInfo(EmployeeDetailsModel employeeDetailsModel)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["userTableConStr"].ConnectionString;
@@ -147,6 +124,12 @@ namespace LoginSample.Db_Access
             }
         }
 
+        /// <summary>
+        /// Gets user details.
+        /// </summary>
+        /// <param name="id">Employee ID.</param>
+        /// <param name="employeeDetailsModel">Employee details</param>
+        /// <returns>True, if user details fetched successfully from database otherwise false.</returns>
         internal static bool GetUserDetails(int id, out EmployeeDetailsModel employeeDetailsModel)
         {
             //EmployeeDetailsModel employeeDetailsModel = new EmployeeDetailsModel();
@@ -185,6 +168,11 @@ namespace LoginSample.Db_Access
             }
         }
 
+        /// <summary>
+        /// Gets the password stored in database.
+        /// </summary>
+        /// <param name="id">ID.</param>
+        /// <returns>Password stored in database.</returns>
         internal static string GetUserPassword(int id)
         {
             string ConnectionString = ConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString;
@@ -213,23 +201,41 @@ namespace LoginSample.Db_Access
             return password;
         }
 
+        /// <summary>
+        /// Updates the password of user or admin based on their id.
+        /// </summary>
+        /// <param name="id">User or admin ID.</param>
+        /// <param name="newPassword">New entered password.</param>
+        /// <returns>True, when password updated successfully otherwise false.</returns>
         internal static bool UpdateNewPassword(int id, string newPassword)
         {
             newPassword = Security.PasswordSecurity.EncodePasswordToBase64(newPassword);
             string ConnectionString = ConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString;
-            using (SqlConnection sqlCon = new SqlConnection(ConnectionString))
+            try
             {
-                sqlCon.Open();
-                string query = "UPDATE LogInfo SET password=@npwd WHERE userid = @userid";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                sqlCmd.Parameters.AddWithValue("@userid", id);
-                sqlCmd.Parameters.AddWithValue("@npwd", newPassword);
+                using (SqlConnection sqlCon = new SqlConnection(ConnectionString))
+                {
+                    sqlCon.Open();
+                    string query = "UPDATE LogInfo SET password=@npwd WHERE userid = @userid";
+                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                    sqlCmd.Parameters.AddWithValue("@userid", id);
+                    sqlCmd.Parameters.AddWithValue("@npwd", newPassword);
 
-                sqlCmd.ExecuteNonQuery();
+                    sqlCmd.ExecuteNonQuery();
+                }
+                return true;
             }
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
+        /// <summary>
+        /// Gets the user id with the specified user name.
+        /// </summary>
+        /// <param name="userName">User name.</param>
+        /// <returns>User ID</returns>
         internal static int GetUserNumIdFromAdminDb(string userName)
         {
             try
@@ -258,6 +264,10 @@ namespace LoginSample.Db_Access
             }
         }
 
+        /// <summary>
+        /// Deletes the user with the specific user id.
+        /// </summary>
+        /// <param name="id">User id.</param>
         internal static void DeleteUser(int id)
         {
             string ConnectionString = ConfigurationManager.ConnectionStrings["userTableConStr"].ConnectionString;

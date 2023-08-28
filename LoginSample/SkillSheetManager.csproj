@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LoginSample</RootNamespace>
-    <AssemblyName>LoginSample</AssemblyName>
+    <AssemblyName>EmployeeSkillsetManagementSystem</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -306,7 +306,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\5559852.jpg" />
+    <Content Include="Images\BackGround.jpg" />
     <Content Include="Images\error.gif" />
+    <Content Include="Images\HeartImage.png" />
+    <Content Include="Images\New_Female_PlaceHolder.png" />
+    <Content Include="Images\New_Male_PlaceHolder.png" />
     <Content Include="Images\pexels-mo-eid-8347501 %281%29.jpg" />
     <Content Include="Images\pexels-mo-eid-8347501 %282%29.jpg" />
     <Content Include="Images\pexels-mo-eid-8347501.jpg" />
