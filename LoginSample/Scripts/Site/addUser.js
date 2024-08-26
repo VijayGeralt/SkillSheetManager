@@ -88,7 +88,7 @@ function AddNewUser() {
             cache: false,
             type: "POST",
             success: function (data) {
-                if (data == 1) {
+                if (data == "1") {
                     alert("succefully entered");
                     return window.location.href = "/Home/AdminPage";
                 }

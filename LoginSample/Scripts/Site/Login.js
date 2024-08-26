@@ -19,7 +19,7 @@
     else {
         $("#btnlogin").val('Plesae wait..');
         $.ajax({
-            url: url,
+            url: "/Home/ValidateUser",
             data: { userId: userid, pass: password },
             cache: false,
             type: "POST",
@@ -28,11 +28,14 @@
                 if (data == "1") {
                     if (usertype == "Admin") {
                         return window.location.href = "/Home/AdminPage";
+                        location.reload();
                     }
                     else {
                         return window.location.href = "/EmployeeDetails/EmployeeDetails";
+                        location.reload();
                     }
-                } else {
+                }
+                else{
                     view.textContent = " *Wrong password";
                     view.style.display = "block";                    
                 }
